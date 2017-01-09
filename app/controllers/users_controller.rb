@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  #before_action :authenticate_user!
+  before_action :authenticate_user!
   
   # GET /users
   # GET /users.json
@@ -77,7 +77,9 @@ class UsersController < ApplicationController
         :country,
         :country_code,
         :currency,
-        :currency_code
+        :currency_code,
+        :password,
+        :password_confirmation
       )
     end
 end

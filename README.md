@@ -51,7 +51,7 @@ Use Ctrl-C to stop
 As a guest you can only read articles and comments, but never change anything.
 
 #### Login
-By default you can login as 'admin' with password 'admin' or normal 'user' with password 'user'.
+By default you can login as 'admin' with password 'sumcumo' or normal 'user' with password 'sumcumo'.
 
 **Note: user 'admin' can never be deleted!**
 

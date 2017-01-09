@@ -16,7 +16,7 @@
     <% User.edit_attributes.each do |attr| %>
         <div style="margin: 5px;">
           <div class="drow">
-            <div class="dcell" style="width: 150px;">
+            <div class="dcell" style="width: 200px;">
               <b><%=  User.get_label(attr) %></b>
             </div>
             <div class="dcell">
@@ -32,10 +32,35 @@
     <% end %>
   </div>
 
+  <div style="margin: 5px;">
+    <div class="drow">
+      <div class="dcell" style="width: 200px;">
+        <b><%=  User.get_label(:password) %></b>
+      </div>
+      <div class="dcell">
+        <%= f.password_field :password, autocomplete: "off" %>
+        <% if @minimum_password_length %>
+            <em>(<%= @minimum_password_length %> characters minimum)</em>
+        <% end %><br />
+      </div>
+    </div>
+  </div>
+
+  <div style="margin: 5px;">
+    <div class="drow">
+      <div class="dcell" style="width: 200px;">
+        <b><%=  User.get_label(:password_confirmation) %></b>
+      </div>
+      <div class="dcell">
+        <%= f.password_field :password_confirmation, autocomplete: "off" %>
+      </div>
+    </div>
+  </div>
+
   <div style="padding-top: 10px; ">
     <div class="drow">
       <div class="dcell"><%= f.submit %></div>
-      <div class="dcell"><%= link_to '<button type="button">Cancel Editing</button>'.html_safe, users_path %></div>
+      <div class="dcell"><%= link_to '<button type="button">Cancel</button>'.html_safe, users_path %></div>
     </div>
   </div>
 

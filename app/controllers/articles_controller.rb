@@ -84,9 +84,8 @@ class ArticlesController < ApplicationController
 
     def prepare_params
       params[:article][:parent_type]  ||= "User"
-      # todo: get from logged in user via Devise!
-      params[:article][:parent_id]    ||= User.first.id
-      params[:article][:user_id]      ||= User.first.id
+      params[:article][:parent_id]    ||= current_user.id
+      params[:article][:user_id]      ||= current_user.id
       params.require(:article).permit(:title, :content, :active, :parent_type, :parent_id, :user_id)
     end
 end

@@ -86,8 +86,7 @@ class CommentsController < ApplicationController
     def prepare_params
       params[:comment][:parent_type]  ||= "Article"
       params[:comment][:parent_id]    ||= params[:article_id]
-      # todo: get from logged in user via Devise!
-      params[:comment][:user_id]      ||= User.first.id
+      params[:comment][:user_id]      ||= current_user.id
       params.require(:comment).permit(:type, :title, :content, :active, :parent_type, :parent_id, :user_id)
     end
 end
