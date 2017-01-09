@@ -21,15 +21,6 @@ class User < ApplicationRecord
   
   validates_format_of :email,:with => Devise::email_regexp
   
-  def ts(attr, format=:std)
-    case format
-      when :date
-        self.send(attr).to_time.strftime("%d.%m.%Y")
-      else
-        self.send(attr).to_time.strftime("%d.%m.%Y %H:%M")
-    end
-  end
-  
   def show_attributes
     CRUD_ATTR
   end
@@ -43,7 +34,7 @@ class User < ApplicationRecord
                 when :active
                   self.active ? "Yes" : "No"
                 when :created_at, :updated_at
-                  ts(attr)
+                  self.send(attr).to_time.strftime("%d.%m.%Y %H:%M")
                 else
                   self.send(attr)
               end
@@ -56,6 +47,7 @@ class User < ApplicationRecord
   def self.get_label(attr)
     attr.to_s.split('_').map{|a| a.capitalize()}.join(' ')
   end
+  
   
   private
   

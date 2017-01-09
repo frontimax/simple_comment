@@ -55,10 +55,23 @@ class UsersController < ApplicationController
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
-    @user.destroy
-    respond_to do |format|
-      format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
-      format.json { head :no_content }
+    # todo: transfer logic to model if possible, add error flashes
+    if prevent_own
+      respond_to do |format|
+        format.html { redirect_to users_url, notice: 'You can not delete youself, pal!' }
+        format.json { head :no_content }
+      end
+    elsif prevent_admin
+      respond_to do |format|
+        format.html { redirect_to users_url, notice: 'You can not delete master admin, pal!' }
+        format.json { head :no_content }
+      end
+    else
+      @user.destroy
+      respond_to do |format|
+        format.html { redirect_to users_url, notice: 'User was successfully deleted.' }
+        format.json { head :no_content }
+      end
     end
   end
 
@@ -81,5 +94,13 @@ class UsersController < ApplicationController
         :password,
         :password_confirmation
       )
+    end
+  
+    def prevent_own
+      current_user == @user
+    end
+
+    def prevent_admin
+      @user.name == 'admin'
     end
 end

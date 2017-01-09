@@ -10,12 +10,16 @@
 users = User.create!(
   [
     {
-      name: 'andy',
-      email: 'andreas.wenk@sumcumo.com'
+      name: 'admin',
+      email: 'andreas.wenk@sumcumo.com',
+      password: 'sumcumo',
+      password_confirmation: 'sumcumo'
     },
     {
-      name: 'joerg',
-      email: 'info@joerg-kirschstein.de'
+      name: 'user',
+      email: 'info@joerg-kirschstein.de',
+      password: 'sumcumo',
+      password_confirmation: 'sumcumo'
     }
   ]
 )

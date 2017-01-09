@@ -7,7 +7,9 @@ RSpec.describe User, :type => :model do
   
   let! (:andy) { create :user, :andy }
   let! (:user_attrs) {
-    [:name, :email, :active, :country, :country_code, :currency, :currency_code, :created_at, :updated_at]
+    [
+      :name, :email, :active, :country, :country_code, :currency, :currency_code, :created_at, :updated_at
+    ]
   }
   # todo: after Devise > only comment other articles from OTHER users!
   let! (:article_active)    { create :article, :active, parent_id: andy.id, user_id: andy.id }
@@ -112,15 +114,7 @@ RSpec.describe User, :type => :model do
   end
   
   describe 'methods' do
-    describe '#ts' do
-      it 'format users timestamps' do
-        compare = andy.created_at.to_time.strftime("%d.%m.%Y %H:%M")
-        expect(andy.ts(:created_at)).to eq compare
-        compare = andy.updated_at.to_time.strftime("%d.%m.%Y %H:%M")
-        expect(andy.ts(:updated_at)).to eq compare
-      end
-    end
-  
+    
     describe '#show_attributes' do
       it 'get show attributes' do
         expect(andy.show_attributes).to eq user_attrs
@@ -137,7 +131,7 @@ RSpec.describe User, :type => :model do
     describe '#get_value' do
       it 'get show attributes' do
         expect(andy.get_value(:active)).to eq 'Yes'
-        expect(andy.get_value(:created_at)).to eq andy.ts(:created_at)
+        expect(andy.get_value(:created_at)).to eq andy.created_at.to_time.strftime("%d.%m.%Y %H:%M")
         expect(andy.get_value(:name)).to eq andy.name
       end
     end

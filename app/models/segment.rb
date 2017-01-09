@@ -19,10 +19,6 @@ class Segment < ApplicationRecord
     self.content.truncate(size, :ommision => "...")
   end
 
-  def ts(attr, format=:std)
-    self.send(attr).to_time.strftime("%d.%m.%Y %H:%M")
-  end
-
   private
   
 end

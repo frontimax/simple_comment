@@ -18,11 +18,11 @@
               <b>Author: </b><%= "#{article.user.name}" %>
             </div>
             <div class="dcell">
-              <b>Created: </b><%= "#{article.ts(:created_at)}" %>
+              <b>Created: </b><%= "#{ts(article.created_at)}" %>
             </div>
             <div class="dcell">
               <% if article.created_at != article.updated_at %>
-                  <b>Modified: </b><%= "#{article.ts(:updated_at)}" %>
+                  <b>Modified: </b><%= "#{ts(article.updated_at)}" %>
               <% end %>
             </div>
           </div>
@@ -43,11 +43,16 @@
                   0
               <% end %>
             </div>
-            <div class="dcell" style="padding-right: 80px;">
-              <%= link_to 'Comment article', new_comment_path(:article_id => article.id)  if has_user_right? %>
+            <div class="dcell" style="padding-right: 20px; width: 130px;">
+              <%= link_to 'Comment Article',
+                          new_comment_path(:article_id => article.id)  if has_user_right? && !is_owner?(article.user) %>
             </div>
-            <div class="dcell"><%= link_to 'Edit article', edit_article_path(article)  if is_owner?(article.user) %></div>
-            <div class="dcell"><%= link_to 'Delete article', article, method: :delete, data: { confirm: 'Are you sure?' }  if is_owner?(article.user) %></div>
+            <div class="dcell"><%= link_to 'Edit article',
+                                           edit_article_path(article)  if is_owner?(article.user) %>
+            </div>
+            <div class="dcell"><%= link_to 'Delete article', article, method: :delete,
+                                           data: { confirm: 'Are you sure?' }  if is_owner?(article.user) %>
+            </div>
           </div>
         </div>
 

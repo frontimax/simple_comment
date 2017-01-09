@@ -27,11 +27,11 @@
         <b>Author: </b><%= "#{@comment.user.name}" %>
       </div>
       <div class="dcell">
-        <b>Created: </b><%= "#{@comment.ts(:created_at)}" %>
+        <b>Created: </b><%= "#{ts(@comment.created_at)}" %>
       </div>
       <div class="dcell">
         <% if @comment.created_at != @comment.updated_at %>
-            <b>Modified: </b><%= "#{@comment.ts(:updated_at)}" %>
+            <b>Modified: </b><%= "#{ts(@comment.updated_at)}" %>
         <% end %>
       </div>
     </div>
@@ -58,11 +58,11 @@
         <b>Author: </b><%= "#{@article.user.name}" %>
       </div>
       <div class="dcell">
-        <b>Created: </b><%= "#{@article.ts(:created_at)}" %>
+        <b>Created: </b><%= "#{ts(@article.created_at)}" %>
       </div>
       <div class="dcell">
         <% if @article.created_at != @article.updated_at %>
-            <b>Modified: </b><%= "#{@article.ts(:updated_at)}" %>
+            <b>Modified: </b><%= "#{ts(@article.updated_at)}" %>
         <% end %>
       </div>
     </div>

@@ -18,7 +18,7 @@
 
   <% if has_user_right? %>
     <div class="dcell" style="padding-left: 30px;">
-      <%= link_to 'Log out', destroy_user_session_path, :method => :delete %>
+      <%= link_to "Log out [#{current_user.name}]", destroy_user_session_path, :method => :delete %>
     </div>
   <% else %>
       <div class="dcell" style="padding-left: 30px;">
