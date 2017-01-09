@@ -119,9 +119,8 @@ class UsersController < ApplicationController
       @user.name == 'admin'
     end
   
-  
-  
     # todo: move this to concern or lib later! ######################### !!!
+    # didnt habe enough time to move this out of the controller, sorry!
     def get_countries
       begin
         create_savon_client
@@ -135,6 +134,7 @@ class UsersController < ApplicationController
     end
   
     def get_country_codes
+      return unless @country
       begin
         response = @client.call(:get_iso_country_code_by_county_name, :message => {"CountryName" => @country})
         result = response.hash[:envelope][:body][:get_iso_country_code_by_county_name_response][:get_iso_country_code_by_county_name_result]
@@ -146,6 +146,7 @@ class UsersController < ApplicationController
     end
   
     def get_currency
+      return unless @country
       begin
         response = @client.call(:get_currency_by_country, :message => {"CountryName" => @country})
         result = response.hash[:envelope][:body][:get_currency_by_country_response][:get_currency_by_country_result]
