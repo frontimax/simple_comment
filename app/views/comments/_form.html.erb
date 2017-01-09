@@ -1,0 +1,39 @@
+<%= form_for(comment) do |f| %>
+  <% if comment.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
+
+      <ul>
+      <% comment.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :title %>
+    <%= f.text_field :title, :style => 'width: 400px;' %>
+  </div>
+
+  <div class="field">
+    <%= f.label :content %>
+    <%= f.text_area :content, size: "140x10" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :active %>
+    <%= f.check_box :active %>
+  </div>
+
+  <div>
+    <%= hidden_field_tag :article_id, @article.id %>
+  </div>
+
+  <div style="padding-top: 10px; ">
+    <div class="drow">
+      <div class="dcell"><%= f.submit %></div>
+      <div class="dcell"><%= link_to '<button type="button">Cancel</button>'.html_safe, article_path(id: @article.id) %></div>
+    </div>
+  </div>
+<% end %>

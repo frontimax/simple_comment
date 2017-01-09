@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sc</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <div id="sc_body" style="">
+      <div id="menue" style="height: 80px;background-color: lightskyblue;color: #fff; padding: 15px;">
+        <%= render 'layouts/menue' %>
+      </div>
+
+      <div id="bodyContent" style="padding: 0 25px;">
+        <%= yield %>
+      </div>
+
+      <div id="footer" style="margin-top: 50px; height: 20px;background-color: lightskyblue;color: #fff; padding: 5px; text-align: center;">
+        <%= render 'layouts/footer' %>
+      </div>
+    </div>
+  </body>
+</html>

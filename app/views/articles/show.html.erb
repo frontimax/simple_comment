@@ -1,0 +1,91 @@
+<p id="notice"><%= notice %></p>
+
+<div style="padding-bottom: 10px;">
+  <div class="drow">
+    <div class="dcell"><%= link_to '<button type="button">Return to Articles</button>'.html_safe, articles_path %></div>
+    <div class="dcell"><%= link_to '<button type="button">Edit Article</button>'.html_safe, edit_article_path(@article) %></div>
+    <div class="dcell"><%= link_to '<button type="button">Delete Article</button>'.html_safe, @article, method: :delete, data: { confirm: 'Are you sure?' } %></div>
+  </div>
+</div>
+
+<div style="border: solid 1px lightskyblue; padding: 15px; width: 700px; margin-bottom: 20px;">
+  <div>
+    <div class="drow">
+      <div class="dcell">
+        <h3><%= @article.title %></h3>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="drow" style="font-style: italic;">
+      <div class="dcell">
+        <b>Author: </b><%= "#{@article.user.name}" %>
+      </div>
+      <div class="dcell">
+        <b>Created: </b><%= "#{@article.ts(:created_at)}" %>
+      </div>
+      <div class="dcell">
+        <% if @article.created_at != @article.updated_at %>
+            <b>Modified: </b><%= "#{@article.ts(:updated_at)}" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div style="padding-top: 10px;">
+    <%= @article.content %>
+  </div>
+</div>
+
+<div style="margin-top: 10px; margin-left: 20px;">
+  <div>
+      <a href="#comments"></a>
+      <h4><%= @article.comments.active_segments.present? ? "Comments for this article: #{@article.comments.active_segments.size}" : "No Comments yet." %></h4>
+  </div>
+  <% if @article.comments.active_segments.present? %>
+    <% @article.comments.active_segments.each_with_index do |comment, index_comment| %>
+
+      <div style="border: solid 1px lightgray; padding: 0 10px 5px 10px; width: 600px; margin-bottom: 20px; font-size: 9pt;">
+        <div>
+          <div class="drow">
+            <div class="dcell">
+              <h3><%= comment.title %></h3>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="drow" style="font-style: italic;">
+            <div class="dcell">
+              <b>Author: </b><%= "#{comment.user.name}" %>
+            </div>
+            <div class="dcell">
+              <b>Created: </b><%= "#{comment.ts(:created_at)}" %>
+            </div>
+            <div class="dcell">
+              <% if comment.created_at != comment.updated_at %>
+                  <b>Modified: </b><%= "#{comment.ts(:updated_at)}" %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+
+        <div style="padding-top: 10px;">
+          <%= comment.content %>
+        </div>
+
+        <div style="padding: 5px 0;">
+          <div class="drow">
+            <div class="dcell"><%= link_to '<button type="button">Edit Comment</button>'.html_safe, edit_comment_path(comment) %></div>
+            <div class="dcell"><%= link_to '<button type="button">Delete Comment</button>'.html_safe, comment, method: :delete, data: { confirm: 'Are you sure?' } %></div>
+          </div>
+        </div>
+
+      </div>
+    <% end %>
+  <% end %>
+</div>
+
+
+

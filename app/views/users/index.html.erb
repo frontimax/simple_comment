@@ -1,0 +1,63 @@
+<p id="notice"><%= notice %></p>
+
+<div class="drow">
+  <div class="dcell">
+    <h1>Users </h1>
+  </div>
+  <div class="dcell" style="padding-right: 20px;">
+    <%= @users.size > 0 ? "(#{@users.size} total)" : "(no users exist yet)" %>
+  </div>
+  <div class="dcell">
+    <%= link_to 'Create new user', new_user_path %>
+  </div>
+</div>
+
+<div>
+  <% @users.each_with_index do |user, idx| %>
+      <div style="background-color: #eeeeee; border: solid 1px black; padding: 0 15px 15px 15px; width: 800px; margin-bottom: 20px;">
+        <div>
+          <div class="drow">
+            <div class="dcell">
+              <%= "User ##{idx+1}" %>
+            </div>
+            <div class="dcell">
+              <h3><%= user.name %></h3>
+            </div>
+            <div class="dcell">
+              <b>Articles: </b><%= user.articles.size %>
+            </div>
+            <div class="dcell">
+              <b>Comments: </b><%= user.comments.size %>
+            </div>
+            <div class="dcell">
+              <b>Received Comments: </b><%= user.received_comments.size %>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="drow" style="font-style: italic;">
+            <div class="dcell">
+              <b>Created: </b><%= "#{user.ts(:created_at)}" %>
+            </div>
+            <div class="dcell">
+              <b>Modified: </b><%= "#{user.ts(:updated_at)}" %>
+            </div>
+          </div>
+        </div>
+
+        <div style="padding-top: 10px; ">
+          <div class="drow">
+            <div class="dcell"><%= link_to '<button type="button">Show User details</button>'.html_safe, user %></div>
+            <div class="dcell"><%= link_to '<button type="button">Edit User</button>'.html_safe, edit_user_path(user) %></div>
+            <div class="dcell"><%= link_to '<button type="button">Delete User</button>'.html_safe, user, method: :delete, data: {
+                confirm: 'Are you sure? Will also delte all articles and comments of this user!' } %>
+            </div>
+            <div class="dcell"><%#= link_to '<button type="button">Show User Articles</button>'.html_safe, edit_user_path(user) %></div>
+            <div class="dcell"><%#= link_to '<button type="button">Show User Comments</button>'.html_safe, edit_user_path(user) %></div>
+          </div>
+        </div>
+
+      </div>
+  <% end %>
+</div>

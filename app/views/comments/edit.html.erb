@@ -1,0 +1,13 @@
+<h1>Editing Comment</h1>
+
+<%= render 'form', comment: @comment %>
+
+<div style="margin-top: 20px;">
+  <div class="field">
+    <h3><%= @article.title %></h3>
+  </div>
+
+  <div class="field">
+    <%= text_area_tag :content, @article.content, size: "140x13", :disabled => true, :style => "overflow-y: scroll; resize: none; padding: 10px;" %>
+  </div>
+</div>

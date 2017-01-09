@@ -1,0 +1,56 @@
+<div>
+  <% @articles.each_with_index do |article, idx| %>
+      <div style="border: solid 1px lightskyblue; padding: 15px; width: 700px; margin-bottom: 20px;">
+        <div>
+          <div class="drow">
+            <div class="dcell">
+              <%= "Article ##{idx+1}" %>
+            </div>
+            <div class="dcell">
+              <h3><%= article.title %></h3>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="drow" style="font-style: italic;">
+            <div class="dcell">
+              <b>Author: </b><%= "#{article.user.name}" %>
+            </div>
+            <div class="dcell">
+              <b>Created: </b><%= "#{article.ts(:created_at)}" %>
+            </div>
+            <div class="dcell">
+              <% if article.created_at != article.updated_at %>
+                  <b>Modified: </b><%= "#{article.ts(:updated_at)}" %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+
+        <div style="padding-top: 10px;">
+          <%= article.preview %>
+          <i><%= link_to 'Show complete article', article %></i>
+        </div>
+
+        <div style="padding-top: 10px; ">
+          <div class="drow">
+            <div class="dcell" style="padding-right: 60px;">
+              <b>Comments: </b>
+              <% if article.comments.active_segments.present? %>
+                  <%= link_to("#{article.number_of_comments}", article_path(article, anchor: "comments")) %>
+              <% else %>
+                  0
+              <% end %>
+            </div>
+            <div class="dcell" style="padding-right: 80px;">
+              <%= link_to 'Comment article', new_comment_path(:article_id => article.id) %>
+            </div>
+            <div class="dcell"><%= link_to 'Edit article', edit_article_path(article) %></div>
+            <div class="dcell"><%= link_to 'Delete article', article, method: :delete, data: { confirm: 'Are you sure?' } %></div>
+          </div>
+        </div>
+
+      </div>
+  <% end %>
+</div>

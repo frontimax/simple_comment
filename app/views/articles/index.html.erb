@@ -1,0 +1,19 @@
+<div>
+  <p id="notice"><%= notice %></p>
+</div>
+
+<div class="drow">
+  <div class="dcell">
+    <h1>Articles </h1>
+  </div>
+  <div class="dcell" style="padding-right: 20px;">
+    <%= @articles.size > 0 ? "(#{@articles.size} total)" : "(no articles exist yet)" %>
+  </div>
+  <div class="dcell">
+    <%= link_to 'Write new article', new_article_path %>
+  </div>
+</div>
+
+<%= render 'index_content' %>
+
+

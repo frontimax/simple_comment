@@ -1,0 +1,26 @@
+<p id="notice"><%= notice %></p>
+
+<div style="padding-bottom: 10px;">
+  <div class="drow">
+    <div class="dcell"><%= link_to '<button type="button">Return to Users</button>'.html_safe, users_path %></div>
+    <div class="dcell"><%= link_to '<button type="button">Edit User</button>'.html_safe, edit_user_path(@user) %></div>
+    <div class="dcell"><%= link_to '<button type="button">Delete User</button>'.html_safe, @user, method: :delete, data:
+        { confirm: 'Are you sure? Will also delte all articles and comments of this user!' } %>
+    </div>
+  </div>
+</div>
+
+<div>
+  <% @user.show_attributes.each do |attr| %>
+    <div style="margin: 5px;">
+      <div class="drow">
+        <div class="dcell" style="width: 150px;">
+          <b><%= @user.get_label(attr).to_s %>: </b>
+        </div>
+        <div class="dcell">
+          <%= @user.get_value(attr).to_s %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

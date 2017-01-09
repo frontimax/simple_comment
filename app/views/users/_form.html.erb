@@ -1,0 +1,42 @@
+<%= form_for(user) do |f| %>
+
+  <% if user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+      <% user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <% User.edit_attributes.each do |attr| %>
+        <div style="margin: 5px;">
+          <div class="drow">
+            <div class="dcell" style="width: 150px;">
+              <b><%=  User.get_label(attr) %></b>
+            </div>
+            <div class="dcell">
+              <% case attr %>
+                <% when :active %>
+                  <%= f.check_box attr %>
+                <% else %>
+                  <%= f.text_field attr, :style => 'width: 300px;' %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+    <% end %>
+  </div>
+
+  <div style="padding-top: 10px; ">
+    <div class="drow">
+      <div class="dcell"><%= f.submit %></div>
+      <div class="dcell"><%= link_to '<button type="button">Cancel Editing</button>'.html_safe, users_path %></div>
+    </div>
+  </div>
+
+<% end %>
