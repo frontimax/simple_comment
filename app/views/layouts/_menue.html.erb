@@ -16,7 +16,7 @@
     <%#= link_to 'Show Comments', comments_path  if has_admin_right? %>
   </div>
 
-  <% if has_user_right? %>
+  <% if user_signed_in? %>
     <div class="dcell" style="padding-left: 30px;">
       <%= link_to "Log out [#{current_user.name}]", destroy_user_session_path, :method => :delete %>
     </div>
