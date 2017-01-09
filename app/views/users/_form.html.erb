@@ -29,6 +29,8 @@
                   <% end %>
                 <% when :active, :admin_role %>
                   <%= f.check_box attr %>
+                <% when :country_code, :currency, :currency_code %>
+                  <%= f.text_field attr, :style => 'width: 300px; background-color: #eee', :readonly => true %>
                 <% else %>
                   <%= f.text_field attr, :style => 'width: 300px;' %>
               <% end %>

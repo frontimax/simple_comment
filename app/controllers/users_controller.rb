@@ -17,6 +17,7 @@ class UsersController < ApplicationController
   def new
     @user = User.new
     get_countries
+    #set_country_values(@user)
   end
 
   # GET /users/1/edit
@@ -43,6 +44,8 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
+    get_countries
+    #set_country_values(params[:user][:country_code])
     respond_to do |format|
       if @user.update(user_params)
         format.html { redirect_to @user, notice: 'User was successfully updated.' }
@@ -115,16 +118,54 @@ class UsersController < ApplicationController
       @user.name == 'admin'
     end
   
-    # todo: move this to concern or lib later!
+  
+  
+    # todo: move this to concern or lib later! ######################### !!!
     def get_countries
       begin
-        client = Savon.client(wsdl: 'http://www.webservicex.net/country.asmx?WSDL')
-        response = client.call(:get_countries)
+        create_savon_client
+        response = @client.call(:get_countries)
         result = response.hash[:envelope][:body][:get_countries_response][:get_countries_result]
         xml = Nokogiri::XML(result)
         @countries = xml.css('Table').map{|e| e.content.strip}
       rescue StandardError => e
         # ...
+      end
+    end
+  
+    def get_country_codes(country)
+      create_savon_client
+      response = @client.call(:get_iso_country_code_by_county_name, :message => {"CountryName" => country})
+      result = response.hash[:envelope][:body][:get_iso_country_code_by_county_name_response][:get_iso_country_code_by_county_name_result]
+      xml = Nokogiri::XML(result)
+      @country_code = xml.css('Table/CountryCode').first.content
+    end
+  
+    def get_currencies
+      
+    end
+  
+    def get_currency_codes
+      
+    end
+  
+    def create_savon_client
+      begin
+        @client = Savon.client(wsdl: 'http://www.webservicex.net/country.asmx?WSDL')
+      rescue StandardError => e
+        # ...
+      end
+    end
+  
+    def set_country_values(country)
+      if @countries.present?
+=begin
+        get_country_codes(country)
+        get_currencies
+        get_currency_codes
+
+        params[:user][:country_code] = @country_code
+=end
       end
     end
 end
