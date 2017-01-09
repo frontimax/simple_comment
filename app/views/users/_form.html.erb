@@ -42,18 +42,20 @@
 
   <h3>Authentication</h3>
 
-  <div style="margin: 5px;">
-    <div class="drow">
-      <div class="dcell" style="width: 200px;">
-        <b><%= "Change password?" %></b>
-      </div>
-      <div class="dcell">
-        <%= check_box_tag :change_password, params[:change_password], params[:change_password] %>
+  <% if user.id.present? %>
+    <div style="margin: 5px;">
+      <div class="drow">
+        <div class="dcell" style="width: 200px;">
+          <b><%= "Change password?" %></b>
+        </div>
+        <div class="dcell">
+          <%= check_box_tag :change_password, params[:change_password], params[:change_password] %>
+        </div>
       </div>
     </div>
-  </div>
+  <% end %>
 
-    <div style="margin: 5px;">
+  <div style="margin: 5px;">
     <div class="drow">
       <div class="dcell" style="width: 200px;">
         <b><%=  User.get_label(:password) %></b>

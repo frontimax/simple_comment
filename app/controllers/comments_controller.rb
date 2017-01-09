@@ -74,7 +74,7 @@ class CommentsController < ApplicationController
     end
 
     def set_article
-      @comment.parent_id.present? ? article_id = @comment.parent_id : article_id = params[:article_id]
+      article_id = @comment.parent_id.present? ? @comment.parent_id : params[:article_id]
       @article = Article.find_by_id(article_id)
     end
   

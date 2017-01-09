@@ -17,7 +17,7 @@ class UsersController < ApplicationController
   def new
     @user = User.new
     get_countries
-    #set_country_values(@user)
+    set_country_values(@user.country)
   end
 
   # GET /users/1/edit
@@ -45,7 +45,7 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1.json
   def update
     get_countries
-    #set_country_values(params[:user][:country_code])
+    set_country_values(params[:user][:country])
     respond_to do |format|
       if @user.update(user_params)
         format.html { redirect_to @user, notice: 'User was successfully updated.' }
@@ -104,7 +104,7 @@ class UsersController < ApplicationController
     end
   
     def check_change_password
-      unless params[:change_password].present?
+      if params[:change_password].blank? || @user.password.present?
         params[:user][:password] = @user.password
         params[:user][:password_confirmation] = @user.password
       end
@@ -133,20 +133,34 @@ class UsersController < ApplicationController
       end
     end
   
-    def get_country_codes(country)
-      create_savon_client
-      response = @client.call(:get_iso_country_code_by_county_name, :message => {"CountryName" => country})
-      result = response.hash[:envelope][:body][:get_iso_country_code_by_county_name_response][:get_iso_country_code_by_county_name_result]
+    def get_country_codes
+      begin
+        response = @client.call(:get_iso_country_code_by_county_name, :message => {"CountryName" => @country})
+        result = response.hash[:envelope][:body][:get_iso_country_code_by_county_name_response][:get_iso_country_code_by_county_name_result]
+        xml = Nokogiri::XML(result)
+        @country_code = xml.css('Table/CountryCode').first.content
+      rescue StandardError => e
+        # ...
+      end
+    end
+  
+    def get_currency
+      begin
+        response = @client.call(:get_currency_by_country, :message => {"CountryName" => @country})
+        result = response.hash[:envelope][:body][:get_currency_by_country_response][:get_currency_by_country_result]
+        xml = Nokogiri::XML(result)
+        @currency = xml.css('Table/Currency').first.content
+      rescue StandardError => e
+        # ...
+      end
+    end
+  
+    def get_currency_code
+      return unless @currency
+      response = @client.call(:get_currency_code_by_currency_name, :message => {"CurrencyName" => @currency})
+      result = response.hash[:envelope][:body][:get_currency_code_by_currency_name_response][:get_currency_code_by_currency_name_result]
       xml = Nokogiri::XML(result)
-      @country_code = xml.css('Table/CountryCode').first.content
-    end
-  
-    def get_currencies
-      
-    end
-  
-    def get_currency_codes
-      
+      @currency_code = xml.css('Table/CurrencyCode').first.content
     end
   
     def create_savon_client
@@ -158,14 +172,14 @@ class UsersController < ApplicationController
     end
   
     def set_country_values(country)
+      @country = country
       if @countries.present?
-=begin
-        get_country_codes(country)
-        get_currencies
-        get_currency_codes
-
-        params[:user][:country_code] = @country_code
-=end
+        get_country_codes
+        get_currency
+        get_currency_code
+        params[:user][:country_code]  = @country_code   if @country_code.present?
+        params[:user][:currency]      = @currency       if @currency.present?
+        params[:user][:currency_code] = @currency_code  if @currency_code.present?
       end
     end
 end
