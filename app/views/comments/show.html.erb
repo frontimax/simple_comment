@@ -7,7 +7,7 @@
                                    article_path(id: @comment.parent_id)  if is_owner?(@comment.user) %>
     </div>
     <div class="dcell"><%= link_to '<button type="button">Delete comment</button>'.html_safe,
-                                   @comment, method: :delete, data: { confirm: 'Are you sure?' }  if is_owner?(@comment.user) %>
+       @comment, method: :delete, data: { confirm: 'Are you sure?' }  if is_owner?(@comment.user) || has_admin_right? %>
     </div>
   </div>
 </div>

@@ -83,6 +83,7 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
+      check_change_password
       params.fetch(:user, {}).permit(
         :name,
         :email,
@@ -92,8 +93,16 @@ class UsersController < ApplicationController
         :currency,
         :currency_code,
         :password,
-        :password_confirmation
+        :password_confirmation,
+        :admin_role
       )
+    end
+  
+    def check_change_password
+      unless params[:change_password].present?
+        params[:user][:password] = @user.password
+        params[:user][:password_confirmation] = @user.password
+      end
     end
   
     def prevent_own

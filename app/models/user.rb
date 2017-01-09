@@ -5,8 +5,11 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
   
   CRUD_ATTR = [
-    :name, :email, :active, :country, :country_code, :currency, :currency_code, :created_at, :updated_at
+    :name, :email, :active, :country, :country_code, :currency, :currency_code, :created_at, :updated_at,
+    :admin_role
   ]
+  
+  before_save :check_admin
   
   has_many :articles, :dependent => :destroy
   has_many :comments, :dependent => :destroy
@@ -21,6 +24,14 @@ class User < ApplicationRecord
   
   validates_format_of :email,:with => Devise::email_regexp
   
+  
+  def check_admin
+    if self.name == 'admin'
+      self.admin_role = true
+      self.active     = true
+    end
+  end
+  
   def show_attributes
     CRUD_ATTR
   end
@@ -31,7 +42,7 @@ class User < ApplicationRecord
 
   def get_value(attr)
     result =  case attr
-                when :active
+                when :active, :admin_role
                   self.active ? "Yes" : "No"
                 when :created_at, :updated_at
                   self.send(attr).to_time.strftime("%d.%m.%Y %H:%M")

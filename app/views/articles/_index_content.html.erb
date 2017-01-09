@@ -51,7 +51,7 @@
                                            edit_article_path(article)  if is_owner?(article.user) %>
             </div>
             <div class="dcell"><%= link_to 'Delete article', article, method: :delete,
-                                           data: { confirm: 'Are you sure?' }  if is_owner?(article.user) %>
+                                           data: { confirm: 'Are you sure?' }  if is_owner?(article.user) || has_admin_right? %>
             </div>
           </div>
         </div>

@@ -13,7 +13,8 @@ users = User.create!(
       name: 'admin',
       email: 'andreas.wenk@sumcumo.com',
       password: 'sumcumo',
-      password_confirmation: 'sumcumo'
+      password_confirmation: 'sumcumo',
+      admin_role: true
     },
     {
       name: 'user',

@@ -7,7 +7,7 @@
                                    edit_article_path(@article)  if is_owner?(@article.user) %>
     </div>
     <div class="dcell"><%= link_to '<button type="button">Delete Article</button>'.html_safe,
-                                   @article, method: :delete, data: { confirm: 'Are you sure?' }  if is_owner?(@article.user) %>
+        @article, method: :delete, data: { confirm: 'Are you sure?' }  if is_owner?(@article.user) || has_admin_right? %>
     </div>
     <div class="dcell" style="padding-right: 20px; width: 130px;">
       <%= link_to '<button type="button">Comment Article</button>'.html_safe,
@@ -89,7 +89,8 @@
                                            edit_comment_path(comment)  if is_owner?(comment.user) %>
             </div>
             <div class="dcell"><%= link_to '<button type="button">Delete Comment</button>'.html_safe,
-                                           comment, method: :delete, data: { confirm: 'Are you sure?' }  if is_owner?(comment.user) %>
+                  comment, method: :delete,
+                  data: { confirm: 'Are you sure?' }  if is_owner?(comment.user) || has_admin_right? %>
             </div>
           </div>
         </div>
