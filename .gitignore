@@ -25,3 +25,6 @@
 
 # redis dump file
 dump.rdb
+
+# finder
+.DS_Store
