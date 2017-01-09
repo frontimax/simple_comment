@@ -17,7 +17,6 @@ class UsersController < ApplicationController
   def new
     @user = User.new
     get_countries
-    set_country_values(@user.country)
   end
 
   # GET /users/1/edit
@@ -28,6 +27,9 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
+    #get_countries
+    #set_country_values(params[:user][:country])
+    Rails.logger.debug("xxx - create - user_params: #{user_params}")
     @user = User.new(user_params)
 
     respond_to do |format|
@@ -104,7 +106,7 @@ class UsersController < ApplicationController
     end
   
     def check_change_password
-      if params[:change_password].blank? || @user.password.present?
+      if params[:change_password].blank? && (@user && @user.password.present?)
         params[:user][:password] = @user.password
         params[:user][:password_confirmation] = @user.password
       end

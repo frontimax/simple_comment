@@ -8,7 +8,8 @@ RSpec.describe User, :type => :model do
   let! (:andy) { create :user, :andy }
   let! (:user_attrs) {
     [
-      :name, :email, :active, :country, :country_code, :currency, :currency_code, :created_at, :updated_at
+      :name, :email, :active, :country, :country_code, :currency, :currency_code, :created_at, :updated_at,
+      :admin_role
     ]
   }
   # todo: after Devise > only comment other articles from OTHER users!
