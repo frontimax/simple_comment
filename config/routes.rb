@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  
+  # bug user create via devise route/registration
+  post 'users' => 'users#create'
+  
   devise_for :users
   root 'articles#index'
 
