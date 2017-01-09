@@ -2,10 +2,15 @@
 
 <div style="padding-bottom: 10px;">
   <div class="drow">
-    <div class="dcell"><%= link_to '<button type="button">Return to Users</button>'.html_safe, users_path %></div>
-    <div class="dcell"><%= link_to '<button type="button">Edit User</button>'.html_safe, edit_user_path(@user) %></div>
-    <div class="dcell"><%= link_to '<button type="button">Delete User</button>'.html_safe, @user, method: :delete, data:
-        { confirm: 'Are you sure? Will also delte all articles and comments of this user!' } %>
+    <div class="dcell"><%= link_to '<button type="button">Return to Users</button>'.html_safe,
+                                   users_path %>
+    </div>
+    <div class="dcell"><%= link_to '<button type="button">Edit User</button>'.html_safe,
+                                   edit_user_path(@user)  if has_admin_right? %>
+    </div>
+    <div class="dcell"><%= link_to '<button type="button">Delete User</button>'.html_safe,
+                                   @user, method: :delete, data:
+        { confirm: 'Are you sure? Will also delte all articles and comments of this user!' }  if has_admin_right? %>
     </div>
   </div>
 </div>

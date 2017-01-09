@@ -8,7 +8,7 @@
     <%= @users.size > 0 ? "(#{@users.size} total)" : "(no users exist yet)" %>
   </div>
   <div class="dcell">
-    <%= link_to 'Create new user', new_user_path %>
+    <%= link_to 'Create new user', new_user_path   if has_admin_right? %>
   </div>
 </div>
 
@@ -48,13 +48,13 @@
 
         <div style="padding-top: 10px; ">
           <div class="drow">
-            <div class="dcell"><%= link_to '<button type="button">Show User details</button>'.html_safe, user %></div>
-            <div class="dcell"><%= link_to '<button type="button">Edit User</button>'.html_safe, edit_user_path(user) %></div>
+            <div class="dcell"><%= link_to '<button type="button">Show User details</button>'.html_safe, user  if has_admin_right? %></div>
+            <div class="dcell"><%= link_to '<button type="button">Edit User</button>'.html_safe, edit_user_path(user) if has_admin_right? %></div>
             <div class="dcell"><%= link_to '<button type="button">Delete User</button>'.html_safe, user, method: :delete, data: {
-                confirm: 'Are you sure? Will also delte all articles and comments of this user!' } %>
+                confirm: 'Are you sure? Will also delte all articles and comments of this user!' }  if has_admin_right? %>
             </div>
-            <div class="dcell"><%#= link_to '<button type="button">Show User Articles</button>'.html_safe, edit_user_path(user) %></div>
-            <div class="dcell"><%#= link_to '<button type="button">Show User Comments</button>'.html_safe, edit_user_path(user) %></div>
+            <div class="dcell"><%#= link_to '<button type="button">Show User Articles</button>'.html_safe, edit_user_path(user)  if has_admin_right? %></div>
+            <div class="dcell"><%#= link_to '<button type="button">Show User Comments</button>'.html_safe, edit_user_path(user)  if has_admin_right? %></div>
           </div>
         </div>
 

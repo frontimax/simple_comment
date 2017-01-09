@@ -1,6 +1,7 @@
 class ArticlesController < ApplicationController
   before_action :set_article, only: [:show, :edit, :update, :destroy]
-
+  before_action :authenticate_user!, only: [:index_inactive]
+  
   # GET /articles
   # GET /articles.json
   def index
@@ -9,6 +10,7 @@ class ArticlesController < ApplicationController
 
   # GET /articles/inactive
   def index_inactive
+    
     @articles = Article.inactive_segments
     respond_to do |format|
         format.html { render :index_inactive }

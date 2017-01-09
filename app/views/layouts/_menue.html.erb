@@ -7,12 +7,22 @@
     <%= link_to 'Show Articles', articles_path %>
   </div>
   <div class="dcell">
-    <%= link_to 'Show Users [Admin only]', users_path %>
+    <%= link_to 'Show Users [Admin only]', users_path  if has_admin_right? %>
   </div>
   <div class="dcell">
-    <%= link_to 'Show Inactive Articles [Admin only]', articles_inactive_path %>
+    <%= link_to 'Show Inactive Articles [Admin only]', articles_inactive_path   if has_admin_right? %>
   </div>
   <div class="dcell">
-    <%#= link_to 'Show Comments', comments_path %>
+    <%#= link_to 'Show Comments', comments_path  if has_admin_right? %>
   </div>
+
+  <% if has_user_right? %>
+    <div class="dcell" style="padding-left: 30px;">
+      <%= link_to 'Log out', destroy_user_session_path, :method => :delete %>
+    </div>
+  <% else %>
+      <div class="dcell" style="padding-left: 30px;">
+      <%= link_to 'Log in', new_user_session_path %>
+    </div>
+  <% end %>
 </div>

@@ -3,8 +3,12 @@
 <div style="padding-bottom: 10px;">
   <div class="drow">
     <div class="dcell"><%= link_to '<button type="button">Return to Articles</button>'.html_safe, articles_path %></div>
-    <div class="dcell"><%= link_to '<button type="button">Edit Article</button>'.html_safe, edit_article_path(@article) %></div>
-    <div class="dcell"><%= link_to '<button type="button">Delete Article</button>'.html_safe, @article, method: :delete, data: { confirm: 'Are you sure?' } %></div>
+    <div class="dcell"><%= link_to '<button type="button">Edit Article</button>'.html_safe,
+                                   edit_article_path(@article)  if is_owner?(@article.user) %>
+    </div>
+    <div class="dcell"><%= link_to '<button type="button">Delete Article</button>'.html_safe,
+                                   @article, method: :delete, data: { confirm: 'Are you sure?' }  if is_owner?(@article.user) %>
+    </div>
   </div>
 </div>
 
@@ -77,8 +81,12 @@
 
         <div style="padding: 5px 0;">
           <div class="drow">
-            <div class="dcell"><%= link_to '<button type="button">Edit Comment</button>'.html_safe, edit_comment_path(comment) %></div>
-            <div class="dcell"><%= link_to '<button type="button">Delete Comment</button>'.html_safe, comment, method: :delete, data: { confirm: 'Are you sure?' } %></div>
+            <div class="dcell"><%= link_to '<button type="button">Edit Comment</button>'.html_safe,
+                                           edit_comment_path(comment)  if is_owner?(comment.user) %>
+            </div>
+            <div class="dcell"><%= link_to '<button type="button">Delete Comment</button>'.html_safe,
+                                           comment, method: :delete, data: { confirm: 'Are you sure?' }  if is_owner?(comment.user) %>
+            </div>
           </div>
         </div>
 

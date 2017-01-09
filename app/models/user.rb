@@ -19,12 +19,15 @@ class User < ApplicationRecord
   validates :currency, :presence => true
   validates :currency_code, :presence => true
   
-  validates_format_of :email,:with => /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/
-  # todo devise:
-  # validates_format_of :email,:with => Devise::email_regexp
+  validates_format_of :email,:with => Devise::email_regexp
   
   def ts(attr, format=:std)
-    self.send(attr).to_time.strftime("%d.%m.%Y %H:%M")
+    case format
+      when :date
+        self.send(attr).to_time.strftime("%d.%m.%Y")
+      else
+        self.send(attr).to_time.strftime("%d.%m.%Y %H:%M")
+    end
   end
   
   def show_attributes

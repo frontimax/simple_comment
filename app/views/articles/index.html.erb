@@ -10,7 +10,7 @@
     <%= @articles.size > 0 ? "(#{@articles.size} total)" : "(no articles exist yet)" %>
   </div>
   <div class="dcell">
-    <%= link_to 'Write new article', new_article_path %>
+    <%= link_to 'Write new article', new_article_path  if has_user_right? %>
   </div>
 </div>
 
