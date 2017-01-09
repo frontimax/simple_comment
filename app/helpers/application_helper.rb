@@ -24,4 +24,8 @@ module ApplicationHelper
     end
   end
   
+  def master_admin?(user)
+    user.name == 'admin'
+  end
+  
 end

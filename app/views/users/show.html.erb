@@ -6,11 +6,11 @@
                                    users_path %>
     </div>
     <div class="dcell"><%= link_to '<button type="button">Edit User</button>'.html_safe,
-                                   edit_user_path(@user)  if has_admin_right? %>
+       edit_user_path(@user)  if has_admin_right? && (!master_admin?(@user) || @user == current_user) %>
     </div>
     <div class="dcell"><%= link_to '<button type="button">Delete User</button>'.html_safe,
                                    @user, method: :delete, data:
-        { confirm: 'Are you sure? Will also delte all articles and comments of this user!' }  if has_admin_right? %>
+        { confirm: 'Are you sure? Will also delte all articles and comments of this user!' }  if has_admin_right? && !master_admin?(@user) %>
     </div>
   </div>
 </div>
