@@ -16,10 +16,12 @@ class UsersController < ApplicationController
   # GET /users/new
   def new
     @user = User.new
+    get_countries
   end
 
   # GET /users/1/edit
   def edit
+    get_countries
   end
 
   # POST /users
@@ -111,5 +113,18 @@ class UsersController < ApplicationController
 
     def prevent_admin
       @user.name == 'admin'
+    end
+  
+    # todo: move this to concern or lib later!
+    def get_countries
+      begin
+        client = Savon.client(wsdl: 'http://www.webservicex.net/country.asmx?WSDL')
+        response = client.call(:get_countries)
+        result = response.hash[:envelope][:body][:get_countries_response][:get_countries_result]
+        xml = Nokogiri::XML(result)
+        @countries = xml.css('Table').map{|e| e.content.strip}
+      rescue StandardError => e
+        # ...
+      end
     end
 end

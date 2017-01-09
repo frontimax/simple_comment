@@ -14,13 +14,15 @@ users = User.create!(
       email: 'andreas.wenk@sumcumo.com',
       password: 'sumcumo',
       password_confirmation: 'sumcumo',
-      admin_role: true
+      admin_role: true,
+      country: 'Germany'
     },
     {
       name: 'user',
       email: 'info@joerg-kirschstein.de',
       password: 'sumcumo',
-      password_confirmation: 'sumcumo'
+      password_confirmation: 'sumcumo',
+      country: 'Germany'
     }
   ]
 )

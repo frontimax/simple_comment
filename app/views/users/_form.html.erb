@@ -21,6 +21,12 @@
             </div>
             <div class="dcell">
               <% case attr %>
+                <% when :country %>
+                  <% if @countries.present? %>
+                    <%= f.select(:country, options_for_select(@countries, user.country), :selected => user.country) %>
+                  <% else %>
+                    <%= f.text_field attr, :style => 'width: 300px;' %>
+                  <% end %>
                 <% when :active, :admin_role %>
                   <%= f.check_box attr %>
                 <% else %>
