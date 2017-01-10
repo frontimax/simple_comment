@@ -106,8 +106,8 @@ class UsersController < ApplicationController
   
     def check_change_password
       if params[:change_password].blank? && (@user && @user.id.present?)
-        params[:user][:password] = @user.password
-        params[:user][:password_confirmation] = @user.password
+        params[:user].delete(:password)
+        params[:user].delete(:password_confirmation)
       end
     end
   
