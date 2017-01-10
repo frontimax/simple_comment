@@ -61,7 +61,7 @@ class UsersController < ApplicationController
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
-    # todo: transfer logic to model if possible, add error flashes
+    # todo: transfer logic to model if possible, add error flashes‚
     if prevent_own
       respond_to do |format|
         format.html { redirect_to users_url, notice: 'You can not delete youself, pal!' }
@@ -133,7 +133,7 @@ class UsersController < ApplicationController
       end
     end
   
-    def get_country_codes
+    def get_country_code
       return unless @country
       begin
         response = @client.call(:get_iso_country_code_by_county_name, :message => {"CountryName" => @country})
@@ -159,10 +159,14 @@ class UsersController < ApplicationController
   
     def get_currency_code
       return unless @currency
-      response = @client.call(:get_currency_code_by_currency_name, :message => {"CurrencyName" => @currency})
-      result = response.hash[:envelope][:body][:get_currency_code_by_currency_name_response][:get_currency_code_by_currency_name_result]
-      xml = Nokogiri::XML(result)
-      @currency_code = xml.css('Table/CurrencyCode').first.content
+      begin
+        response = @client.call(:get_currency_code_by_currency_name, :message => {"CurrencyName" => @currency})
+        result = response.hash[:envelope][:body][:get_currency_code_by_currency_name_response][:get_currency_code_by_currency_name_result]
+        xml = Nokogiri::XML(result)
+        @currency_code = xml.css('Table/CurrencyCode').first.content
+      rescue StandardError => e
+        # ...
+      end
     end
   
     def create_savon_client
@@ -176,7 +180,7 @@ class UsersController < ApplicationController
     def set_country_values(country)
       @country = country
       if @countries.present?
-        get_country_codes
+        get_country_code
         get_currency
         get_currency_code
         params[:user][:country_code]  = @country_code   if @country_code.present?

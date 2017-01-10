@@ -6,13 +6,13 @@ require 'rails_helper'
 RSpec.describe User, :type => :model do
   
   let! (:andy) { create :user, :andy }
+  let! (:admin) { create :user, :admin }
   let! (:user_attrs) {
     [
       :name, :email, :active, :country, :country_code, :currency, :currency_code, :created_at, :updated_at,
       :admin_role
     ]
   }
-  # todo: after Devise > only comment other articles from OTHER users!
   let! (:article_active)    { create :article, :active, parent_id: andy.id, user_id: andy.id }
   let! (:article_inactive)  { create :article, :inactive, parent_id: andy.id, user_id: andy.id }
   let! (:comment_active)    { create :comment, :active, parent_id: article_active.id, user_id: andy.id }
@@ -20,9 +20,9 @@ RSpec.describe User, :type => :model do
   
   describe 'validations' do
     
-    context 'create new user' do
+    context 'create user' do
       it 'valid new user' do
-        expect(User.count).to eq 1
+        expect(User.count).to eq 2
         expect(User.first.name).to eq 'andy'
         expect(User.first).to eq andy
       end
@@ -37,7 +37,7 @@ RSpec.describe User, :type => :model do
       shared_examples 'must be unique' do |attr|
         it "'#{attr}' has already been taken" do
           this_user.save
-          expect(User.count).to eq 1
+          expect(User.count).to eq 2
           expect(this_user.errors.messages[attr]).to include "has already been taken"
         end
       end
@@ -45,7 +45,7 @@ RSpec.describe User, :type => :model do
       shared_examples 'must be present' do |attr|
         it "'#{attr}' can't be blank" do
           this_user.save
-          expect(User.count).to eq 1
+          expect(User.count).to eq 2
           expect(this_user.errors.messages[attr]).to include "can't be blank"
         end
       end
@@ -70,6 +70,19 @@ RSpec.describe User, :type => :model do
         end
       end
       
+    end
+    
+  end
+  
+  describe 'callbacks' do
+    it 'check_admin' do
+      expect(admin.admin_role).to eq true
+      expect(admin.active).to eq true
+      admin.admin_role = false
+      admin.active = false
+      admin.save
+      expect(admin.admin_role).to eq true
+      expect(admin.active).to eq true
     end
   end
   
@@ -98,8 +111,7 @@ RSpec.describe User, :type => :model do
         expect(andy.comments.inactive_segments.size).to eq 1
       end
     end
-
-    # todo: changes after devise, see top!
+    
     describe 'received comments' do
       it 'one user has n received comments' do
         expect(andy.received_comments.size).to eq 2

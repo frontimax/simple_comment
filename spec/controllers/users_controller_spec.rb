@@ -25,6 +25,7 @@ RSpec.describe UsersController, type: :controller do
   let(:valid_session) { {} }
 
   describe 'user is logged in' do
+    
     before :each do
       login_with andy
     end
@@ -152,6 +153,50 @@ RSpec.describe UsersController, type: :controller do
         expect(response).to redirect_to(users_url)
       end
     end
+    
+    # todo: test all methods!
+    describe 'soap functions' do
+      
+      it 'edit#get_countries' do
+        user = User.create! valid_attributes
+        get :edit, params: {id: user.to_param}, session: valid_session
+        expect(assigns(:user)).to eq(user)
+        expect(assigns(:countries).size).to eq 244
+      end
+
+      it 'create#get_countries' do
+        user = User.create! valid_attributes
+        post :create, params: {user: valid_attributes}, session: valid_session
+        expect(assigns(:user)).to be_a(User)
+        expect(assigns(:countries).size).to eq 244
+      end
+
+      context 'update' do
+        let(:new_attributes) {
+          {
+            name: 'Willy',
+            email: 'willy@online.de'
+          }
+        }
+
+        it 'update#get_countries' do
+          user = User.create! valid_attributes
+          put :update, params: {id: user.to_param, user: new_attributes}, session: valid_session
+          user.reload
+          expect(assigns(:user)).to eq(user)
+          expect(assigns(:countries).size).to eq 244
+        end
+      end
+      
+      it 'private methods' do
+        c = UsersController.new
+        controller.instance_variable_set(:@countries, c.send(:get_countries))
+        expect(assigns(:countries).size).to eq 244
+        controller.instance_variable_set(:@country, 'Germany')
+        expect(assigns(:country)).to eq 'Germany'
+      end
+    end
+    
   end
   
 end
