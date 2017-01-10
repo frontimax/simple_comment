@@ -7,11 +7,15 @@ This is a demo project to cover some tasks. Users can read and modify articles a
 You will need memcached and redis on your system. Make sure its installed, get more info here:
 
 Mac:
+
 https://www.hacksparrow.com/install-memcached-on-mac-os-x.html
+
 http://jasdeep.ca/2012/05/installing-redis-on-mac-os-x/
 
 Ubuntu:
+
 https://www.digitalocean.com/community/tutorials/how-to-install-and-use-memcache-on-ubuntu-14-04
+
 https://wiki.ubuntuusers.de/Redis/
 
 #### Set up the database
@@ -19,11 +23,15 @@ Go to sc project directory and use rake db:reset to setup the sqlite database an
 
 ```
 MBP:sc user$ rake db:reset
-MBP:sc user$ rake db:reset RAILS_ENV=production DISABLE_DATABASE_ENVIRONMENT_CHECK=1
-MBP:sc user$ rake assets:precompile
-MBP:sc user$ or: RAILS_ENV=production bundle exec rake assets:precompile
+MBP:sc user$ rake db:reset RAILS_ENV=production 
 .
 seed finished!
+```
+
+Then precompile the assets for production mode:
+
+```
+MBP:sc user$ rake assets:precompile
 ```
 
 ### Starting redis and memcached
@@ -53,7 +61,7 @@ As a guest you can only read articles and comments, but never change anything.
 #### Login
 By default you can login as 'admin' with password 'sumcumo' or normal 'user' with password 'sumcumo'.
 
-**Note: user 'admin' can never be deleted!**
+**Note: user 'admin' can never be deleted, its role changed or be edited by someone else**
 
 #### Admin
 An admin has role 'admin' which allows him to edit and delete everything except items from user 'admin' itself (master admin).

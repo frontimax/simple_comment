@@ -23,6 +23,13 @@ users = User.create!(
       password: 'sumcumo',
       password_confirmation: 'sumcumo',
       country: 'Germany'
+    },
+    {
+      name: 'max',
+      email: 'max@online.de',
+      password: 'sumcumo',
+      password_confirmation: 'sumcumo',
+      country: 'Germany'
     }
   ]
 )
@@ -43,6 +50,13 @@ articles = Article.create!(
       user_id: users.second.id,
       parent_type: 'User',
       parent_id: users.second.id
+    },
+    {
+      title: 'Ronaldo ist Weltfußballer des Jahres',
+      content: 'Cristiano Ronaldo ist zum zweiten Mal innerhalb kurzer Zeit als bester Fußballer des Jahres 2016 ausgezeichnet worden. Nach seinem Triumph bei der Ballon-d Or-Wahl im Dezember wurde der 31 Jahre alte Portugiese nun auch von der Fifa zum Weltfußballer gekürt. Ronaldo setzte sich dabei gegen Dauerrivale Lionel Messi aus Argentinien und den Franzosen Antoine Griezmann durch. Hintergrund der zwei Wahlen ist ein Streit zwischen der Fifa und dem französischen Magazin "France Football", dem die Marke Ballon dOr gehört. Deshalb werden nach sechsjähriger Zusammenarbeit nun zwei Auszeichnungen vergeben. Neu ist dabei, dass neben Journalisten, Kapitänen und Trainern der Nationalmannschaften auch Fans mit abstimmen durften.',
+      user_id: User.where(name: 'max').first.id,
+      parent_type: 'User',
+      parent_id: User.where(name: 'max').first.id
     }
   ]
 )
@@ -54,6 +68,13 @@ comments = Comment.create!(
       title: 'Beeing first is not everything :-)',
       content: '... but I salute you anyway.',
       user_id: users.second.id,
+      parent_type: 'Article',
+      parent_id: articles.first.id
+    },
+    {
+      title: 'I really like your workplace!',
+      content: 'Maybe we should meet again?',
+      user_id: User.where(name: 'max').first.id,
       parent_type: 'Article',
       parent_id: articles.first.id
     }
