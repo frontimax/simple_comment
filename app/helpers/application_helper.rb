@@ -1,13 +1,11 @@
 module ApplicationHelper
   
   def has_admin_right?
-    #has_user_right? && current_user.admin_role # deprecated thru can
-    can? :manage, :all
+    user_signed_in? && (can? :manage, :all)
   end
 
   def has_user_right?
-    #user_signed_in? # deprecated thru can
-    can? :manage, :own
+    user_signed_in? && (can? :manage, :own)
   end
   
   def is_owner?(user)
