@@ -122,12 +122,20 @@ class UsersController < ApplicationController
     # todo: move this to concern or lib later! ######################### !!!
     # didnt habe enough time to move this out of the controller, sorry!
     def get_countries
+      
+      # check database first
+      if Country.first.present?
+        @countries = Country.all.pluck(:country)
+        return
+      end
+      
       begin
         create_savon_client
         response = @client.call(:get_countries)
         result = response.hash[:envelope][:body][:get_countries_response][:get_countries_result]
         xml = Nokogiri::XML(result)
         @countries = xml.css('Table').map{|e| e.content.strip}
+        Country.insert_countries(@countries)
       rescue StandardError => e
         # ...
       end

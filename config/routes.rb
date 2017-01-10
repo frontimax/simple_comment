@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   
+  resources :countries
   # bug user create via devise route/registration
   post 'users' => 'users#create'
   

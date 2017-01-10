@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170109203627) do
+ActiveRecord::Schema.define(version: 20170110123434) do
+
+  create_table "countries", force: :cascade do |t|
+    t.string   "country"
+    t.string   "country_code"
+    t.string   "currency"
+    t.string   "currency_code"
+    t.boolean  "active"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
 
   create_table "segments", force: :cascade do |t|
     t.string   "type"
@@ -22,6 +32,16 @@ ActiveRecord::Schema.define(version: 20170109203627) do
     t.string   "parent_type"
     t.integer  "parent_id"
     t.integer  "user_id"
+  end
+
+  create_table "table_countries", force: :cascade do |t|
+    t.string   "country",                      null: false
+    t.string   "country_code"
+    t.string   "currency"
+    t.string   "currency_code"
+    t.boolean  "active",        default: true
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
   end
 
   create_table "users", force: :cascade do |t|
