@@ -24,6 +24,13 @@ class User < ApplicationRecord
   
   validates_format_of :email,:with => Devise::email_regexp
   
+  def active_for_authentication?
+    super && self.active?
+  end
+  
+  def inactive_message
+    'Sorry, your account is disabled. Contact an admin.'
+  end
   
   def check_admin
     if self.name == 'admin'
