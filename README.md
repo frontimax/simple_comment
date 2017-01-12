@@ -79,6 +79,13 @@ Finished in 1.34 seconds (files took 1.88 seconds to load)
 67 examples, 0 failures
 ```
 
+Screenshots
+
+![alt text](vendor/screenshots/login.png "Login")
+
+![alt text](vendor/screenshots/articles02.png "Articles")
+
+![alt text](vendor/screenshots/edit_user.png "Edit User")
 
 
 

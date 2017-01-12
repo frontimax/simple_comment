@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
 
   before_action :configure_permitted_parameters, if: :devise_controller?
 
-  VERSION_SC = '1.1'
+  VERSION_SC = '1.2'
 
   protected
 
