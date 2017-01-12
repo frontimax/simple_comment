@@ -81,7 +81,7 @@ Finished in 1.34 seconds (files took 1.88 seconds to load)
 
 Screenshots
 
-![alt text](vendor/screenshots/login.png "Login")
+![alt text](vendor/screenshots/login.png =300x242 "Login")
 
 ![alt text](vendor/screenshots/articles02.png "Articles")
 
