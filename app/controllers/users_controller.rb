@@ -128,7 +128,7 @@ class UsersController < ApplicationController
         @countries = Country.all.pluck(:country)
         return
       end
-      
+
       begin
         create_savon_client
         response = @client.call(:get_countries)
