@@ -154,13 +154,14 @@ RSpec.describe UsersController, type: :controller do
       end
     end
     
-    # todo: test all methods!
     describe 'soap functions' do
       
       it 'edit#get_countries' do
+        expect(Cccode::CountryCode.exists?).to be_falsey
         user = User.create! valid_attributes
         get :edit, params: {id: user.to_param}, session: valid_session
         expect(assigns(:user)).to eq(user)
+        expect(Cccode::CountryCode.exists?).to be_truthy
         expect(assigns(:countries).size).to eq 244
       end
 

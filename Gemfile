@@ -83,4 +83,6 @@ gem 'coderay', '1.1.1'
 gem 'slop', '3.6.0'
 gem 'pry', '0.10.4'
 
+gem 'cccode', '0.1.0'
+
 
